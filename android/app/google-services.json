@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "958129236271",
+    "project_id": "buzzhub-99908",
+    "storage_bucket": "buzzhub-99908.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958129236271:android:6462f7b65e28624dde99da",
+        "android_client_info": {
+          "package_name": "com.example.buzzhub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmXE69BQ3XwpQfqNFCkMPbfUBqWn2iqkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
