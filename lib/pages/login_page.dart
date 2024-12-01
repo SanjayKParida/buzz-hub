@@ -1,5 +1,7 @@
 import 'package:buzzhub/consts.dart';
+import 'package:buzzhub/services/alert_service.dart';
 import 'package:buzzhub/services/auth_service.dart';
+import 'package:buzzhub/services/navigation_service.dart';
 import 'package:buzzhub/widgets/custom_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -15,6 +17,9 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _loginFormKey = GlobalKey();
   final GetIt _getIt = GetIt.instance;
   late AuthService _authService;
+  late AlertService _alertService;
+
+  late NavigationService _navigationService;
 
   String? email, password;
 
@@ -22,6 +27,8 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _authService = _getIt.get<AuthService>();
+    _navigationService = _getIt.get<NavigationService>();
+    _alertService = _getIt.get<AlertService>();
   }
 
   @override
@@ -120,23 +127,34 @@ class _LoginPageState extends State<LoginPage> {
             if (_loginFormKey.currentState?.validate() ?? false) {
               _loginFormKey.currentState?.save();
               bool result = await _authService.login(email!, password!);
-              print(result);
+              if (result) {
+                _navigationService.pushReplacementNamed("/home");
+              } else {
+                _alertService.showToast(
+                    text: "Failed to Login, please try again!",
+                    icon: Icons.error);
+              }
             }
           }),
     );
   }
 
   Widget _createAnAccountLink() {
-    return const Expanded(
+    return Expanded(
         child: Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text("Don't have an account? "),
-        Text(
-          "Sign Up",
-          style: TextStyle(fontWeight: FontWeight.w800),
+        const Text("Don't have an account? "),
+        GestureDetector(
+          onTap: () {
+            _navigationService.pushNamed("/register");
+          },
+          child: const Text(
+            "Sign Up",
+            style: TextStyle(fontWeight: FontWeight.w800),
+          ),
         )
       ],
     ));
